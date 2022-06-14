@@ -24,9 +24,13 @@ public class DeportistaServiceImpl implements DeportistaService {
     private DeportistaRepository deportistaRepository;
 
     public ResponseEntity addDeportista(Deportista deportista){
-        Deportista D = deportistaRepository.save(deportista);
+        if(findByNameAndLastName(deportista.getName(), deportista.getLastName()).getBody() == null){
+            Deportista D = deportistaRepository.save(deportista);
+            return ResponseEntity.status(HttpStatus.CREATED).location(buildURL(path, D.getId().toString())).build();
+        }else{
+            throw new HttpClientErrorException(HttpStatus.CONFLICT, "deportist already exist");
+        }
 
-        return ResponseEntity.status(HttpStatus.CREATED).location(buildURL(path, D.getId().toString())).build();
     }
 
     public ResponseEntity<List<Deportista>> getAll(){
@@ -38,6 +42,17 @@ public class DeportistaServiceImpl implements DeportistaService {
         Deportista deportista = deportistaRepository.findById(deportistaId).orElseThrow(() -> new HttpClientErrorException(HttpStatus.NO_CONTENT, "This Deportista not exist"));
 
         return ResponseEntity.status(HttpStatus.OK).body(deportista);
+    }
+
+    public ResponseEntity<Deportista> findByNameAndLastName(String name, String lastName){
+        Deportista deportista = deportistaRepository.findByNameAndLastName(name, lastName);
+
+        if (deportista == null){
+            return  ResponseEntity.status(HttpStatus.NO_CONTENT).body(null);
+        }else{
+            return ResponseEntity.status(HttpStatus.OK).body(deportista);
+        }
+
     }
 
 

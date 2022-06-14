@@ -11,4 +11,6 @@ public interface DeportistaService {
     ResponseEntity<List<Deportista>> getAll();
 
     ResponseEntity<Deportista> getById(Integer deportistaId);
+
+    ResponseEntity<Deportista> findByNameAndLastName(String name, String lastName);
 }
