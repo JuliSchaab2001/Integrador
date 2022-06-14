@@ -13,4 +13,8 @@ public interface DeportistaService {
     ResponseEntity<Deportista> getById(Integer deportistaId);
 
     ResponseEntity<Deportista> findByNameAndLastName(String name, String lastName);
+
+    ResponseEntity<Integer> getPointsByDeportistaId(Integer deportistaId);
+
+    ResponseEntity addDeportistaStats(Integer deportistaId, String type, Integer quantity);
 }
