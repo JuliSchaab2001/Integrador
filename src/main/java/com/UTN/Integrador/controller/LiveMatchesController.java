@@ -26,11 +26,12 @@ public class LiveMatchesController {
 
 
         @ApiOperation(value = "Return live Matches", produces = "Matches")
-        @GetMapping("/")
+        @GetMapping("/A")
         //@CircuitBreaker(name = "service1", fallbackMethod = "LiveMatchesFallback")
         public ResponseEntity<Matches> getLiveMatchs() throws IOException, InterruptedException {
                 return liveMatchService.getLiveMatch();
         }
+
 
 
         /*public ResponseEntity<Matches> LiveMatchesFallback(final Throwable excep){
